@@ -15,11 +15,14 @@ typedef enum{
 
 }GROUND_TYPE;
 
-
+typedef struct{
+    vec2 position;
+    float radius;
+}Junction;
 
 typedef struct{
-    vec2 begin;
-    vec2 end;
+    Junction* begin;
+    Junction* end;
     float width;
     float speed_mod;
     GROUND_TYPE gnd_type;
