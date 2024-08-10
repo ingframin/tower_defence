@@ -25,12 +25,28 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #endif
 #include <stdlib.h>
 
-double v2_mod(vec2 v)
-{
-  return hypot(v.x, v.y);
+
+//convert from float to int
+vec2i v2i_fromFloat(vec2 v){
+  vec2i res;
+  res.x = lroundf(v.x);
+  res.y = lroundf(v.y);
+  return res;
+}
+//convert from int to float
+vec2 v2_fromInt(vec2i v){
+  vec2 res;
+  res.x = (float)v.x;
+  res.y = (float)v.y;
+  return res;
 }
 
-vec2 v2_rotate(vec2 v, double angle)
+float v2_mod(vec2 v)
+{
+  return hypotf(v.x, v.y);
+}
+
+vec2 v2_rotate(vec2 v, float angle)
 {
   /*
   * Preliminary checks:
@@ -55,10 +71,10 @@ vec2 v2_rotate(vec2 v, double angle)
     return v2_reverse(v2_rotateLeftHalfPI(v));
   }
   
-  double C = cos(angle);
-  double S = sin(angle);
+  float C = cosf(angle);
+  float S = sinf(angle);
 
-  double m = v2_mod(v);
+  float m = v2_mod(v);
   vec2 vn;
   vn.x = v.x / m;
   vn.y = v.y / m;
@@ -73,7 +89,7 @@ vec2 v2_rotate(vec2 v, double angle)
 vec2 v2_normalize(vec2 v)
 {
   vec2 n;
-  double m = v2_mod(v);
+  float m = v2_mod(v);
   n.x = v.x / m;
   n.y = v.y / m;
   return n;
@@ -95,12 +111,12 @@ vec2 v2_diff(vec2 v1, vec2 v2)
   return res;
 }
 
-double v2_dot(vec2 v1, vec2 v2)
+float v2_dot(vec2 v1, vec2 v2)
 {
   return v1.x * v2.x + v1.y * v2.y;
 }
 
-vec2 v2_addK(vec2 v, double k)
+vec2 v2_addK(vec2 v, float k)
 {
   vec2 res;
   res.x = v.x + k;
@@ -108,7 +124,7 @@ vec2 v2_addK(vec2 v, double k)
   return res;
 }
 
-vec2 v2_scale(vec2 v, double k)
+vec2 v2_scale(vec2 v, float k)
 {
   vec2 res;
   res.x = v.x * k;
@@ -116,7 +132,7 @@ vec2 v2_scale(vec2 v, double k)
   return res;
 }
 
-double v2_distance(vec2 v1, vec2 v2)
+float v2_distance(vec2 v1, vec2 v2)
 {
   vec2 res = v2_diff(v1, v2);
   return v2_mod(res);
@@ -146,21 +162,21 @@ vec2 v2_reverse(vec2 p){
 
 }
 
-vec2 v2_lerp(vec2 p1, vec2 p2, double t){
+vec2 v2_lerp(vec2 p1, vec2 p2, float t){
   vec2 a = v2_scale(p1,1.0-t);
   vec2 b = v2_scale(p2,t);
   return v2_add(a,b);
 
 }
 
-vec2 v2_qspline(vec2 p1, vec2 p2, vec2 p3, double t){
+vec2 v2_qspline(vec2 p1, vec2 p2, vec2 p3, float t){
     vec2 p0i = v2_lerp(p1,p2,t);
     vec2 p1i = v2_lerp(p2,p3,t);
     
     return v2_lerp(p0i,p1i,t);
 }
 
-vec2 v2_cspline(vec2 p1, vec2 p2, vec2 p3, vec2 p4, double t){
+vec2 v2_cspline(vec2 p1, vec2 p2, vec2 p3, vec2 p4, float t){
     vec2 p0i = v2_lerp(p1,p2,t);
     vec2 p1i = v2_lerp(p2,p3,t);
     vec2 p2i = v2_lerp(p3,p4,t);
@@ -168,16 +184,16 @@ vec2 v2_cspline(vec2 p1, vec2 p2, vec2 p3, vec2 p4, double t){
     return v2_qspline(p0i,p1i,p2i,t);
 }
 
-double v2_angle_between(vec2 v1, vec2 v2){
-  double mods = v2_mod(v1)*v2_mod(v2);
-  double sina = (v1.x*v2.y - v2.x*v1.y)/mods;
-  double cosa = (v1.x*v2.x + v1.y*v2.y)/mods;
+float v2_angle_between(vec2 v1, vec2 v2){
+  float mods = v2_mod(v1)*v2_mod(v2);
+  float sinfa = (v1.x*v2.y - v2.x*v1.y)/mods;
+  float cosfa = (v1.x*v2.x + v1.y*v2.y)/mods;
 
-  return atan2(sina, cosa);
+  return atan2(sinfa, cosfa);
 
 }
 
-vec2 v2_interpolate(vec2 vs[], size_t vs_len, double t){
+vec2 v2_interpolate(vec2 vs[], size_t vs_len, float t){
   if(vs_len == 1){
       return vs[0];
   }
