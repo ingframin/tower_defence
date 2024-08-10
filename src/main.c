@@ -2,13 +2,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
+#include "display.h"
 
 int main(int argc, char* argv[]) {
-    SDL_Init(SDL_INIT_VIDEO);
+    Display* disp = newDisplay("Tower Defence", 800, 600);
 
-    SDL_Window* window = SDL_CreateWindow("SDL2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
-
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
     bool running = true;
     while (running) {
         SDL_Event event;
@@ -17,14 +15,12 @@ int main(int argc, char* argv[]) {
                 running = false;
             }
         }
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
+        clearDisplay(disp);
+        SDL_RenderPresent(disp->rnd);
 
     }
     
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    destroyDisplay(disp);
     SDL_Quit();
     return 0;
 }
