@@ -1,0 +1,29 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [	
+                "-Wall",
+                "-Werror",
+                "-Wextra",
+                "-Wpedantic",
+                "-std=c++17",
+                "-o",
+                "build/tdgame",
+                "src/main.cpp",
+                "src/vec2d.cpp",
+                "src/display.cpp",
+                "-I./include",
+                "-L./lib",
+                "-lSDL2",
+                "-lSDL2_image",
+                "-lSDL2_mixer"
+            ]
+        }
+    ]
+}
