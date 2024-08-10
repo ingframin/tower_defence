@@ -1,5 +1,5 @@
-#ifndef UTILS_H_INCLUDED
-#define UTILS_H_INCLUDED
+#ifndef PARTICLES_H_INCLUDED
+#define PARTICLES_H_INCLUDED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
