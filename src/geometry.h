@@ -18,6 +18,12 @@ typedef struct Triangle
   vec2 C;
 } Triangle;
 
+typedef struct{
+  vec2 begin;
+  vec2 end;
+  float width;
+  float length;
+}Path;
 
 Triangle* new_triangle(vec2 A, vec2 B, vec2 C);
 void delete_triangle(Triangle* t);
