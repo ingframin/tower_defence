@@ -11,6 +11,7 @@ typedef struct{
     uint64_t enter_time;
     float speed;
     float radius;
+    
 }Physics;
 
 void phy_move(Physics* phy, Path* path, uint64_t world_time, float time_scale);
